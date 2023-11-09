@@ -37,7 +37,7 @@ jobs:
           mysql user: developer # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Of course you can use secrets, too
           mysql password: ${{ secrets.DB_PASSWORD }}
 
-      - name: yml 파일 생성
+      - name: application 설정 파일 생성
         run: |
           cd ./src/main
           mkdir resources
