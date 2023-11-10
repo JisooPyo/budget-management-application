@@ -64,15 +64,19 @@
 
 ## 📐 Architecture
 
-
+<p align="center">
+  <img src="https://github.com/JisooPyo/budget-management-application/assets/130378232/8b7903c4-97ad-47b8-859e-3d29e84adcba" height=300px>
+</p>
 
 <br>
 
 ## 💬 ERD
 
-<img src="https://github.com/JisooPyo/budget-management-application/assets/130378232/4897097b-2605-498c-b2d9-62255468f84f">
+<p align="center">
+  <img src="https://github.com/JisooPyo/budget-management-application/assets/130378232/4897097b-2605-498c-b2d9-62255468f84f" height=450px>
+</p>
 
-<br>
+<br><br>
 
 ## 🤝 REST API
 
