@@ -21,8 +21,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signup(SignupRequestDto requestDto) {
         String account = requestDto.getAccount();
-        userRepository.findByAccount(account).orElseThrow(
-                () -> new CustomException(CustomErrorCode.USER_ALREADY_EXIST)
+        userRepository.findByAccount(account).ifPresent(
+                (a) -> {
+                    throw new CustomException(CustomErrorCode.USER_ALREADY_EXIST);
+                }
         );
 
         String password = passwordEncoder.encode(requestDto.getPassword());
