@@ -4,13 +4,18 @@ import com.teamJ.budgetManagementApplication.budget.entity.Budget;
 import com.teamJ.budgetManagementApplication.common.entity.Timestamped;
 import com.teamJ.budgetManagementApplication.expense.entity.Expense;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor @AllArgsConstructor
 public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
