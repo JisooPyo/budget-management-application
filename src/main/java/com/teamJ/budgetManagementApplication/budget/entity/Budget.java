@@ -10,8 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(uniqueConstraints =
-        {@UniqueConstraint(columnNames = {"year", "month"})})
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
