@@ -3,10 +3,16 @@ package com.teamJ.budgetManagementApplication.budgetCategory.entity;
 import com.teamJ.budgetManagementApplication.budget.entity.Budget;
 import com.teamJ.budgetManagementApplication.category.entity.Category;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BudgetCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
