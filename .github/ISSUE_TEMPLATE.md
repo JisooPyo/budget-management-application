@@ -1,9 +1,8 @@
 ## Issue
 
 <!-- 이슈에 대해 설명해주세요 -->
-<!-- 이슈타입: docs, feature, fix, refactor, ... -->
 
-* 이슈타입 :  
+* 이슈설명 :  
 
 ## To-do
 
