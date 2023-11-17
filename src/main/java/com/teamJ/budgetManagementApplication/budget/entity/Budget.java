@@ -3,13 +3,19 @@ package com.teamJ.budgetManagementApplication.budget.entity;
 import com.teamJ.budgetManagementApplication.budgetCategory.entity.BudgetCategory;
 import com.teamJ.budgetManagementApplication.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

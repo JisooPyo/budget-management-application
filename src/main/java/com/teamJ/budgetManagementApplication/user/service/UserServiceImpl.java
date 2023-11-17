@@ -21,15 +21,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signup(SignupRequestDto requestDto) {
         String account = requestDto.getAccount();
-        userRepository.findByAccount(account).ifPresent(
-                (a) -> {
-                    throw new CustomException(CustomErrorCode.USER_ALREADY_EXIST);
-                }
-        );
+        checkAlreadySignup(account);
 
         String password = passwordEncoder.encode(requestDto.getPassword());
 
         User user = User.builder().account(account).password(password).build();
         userRepository.save(user);
+    }
+
+    public void checkAlreadySignup(String account) {
+        if (userRepository.findByAccount(account).isPresent()) {
+            throw new CustomException(CustomErrorCode.USER_ALREADY_EXISTS);
+        }
+    }
+
+    public User findUser(String account) {
+        return userRepository.findByAccount(account).orElseThrow(
+                () -> new CustomException(CustomErrorCode.USER_NOT_FOUND)
+        );
     }
 }
