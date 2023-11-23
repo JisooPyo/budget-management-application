@@ -28,4 +28,10 @@ public class BudgetCategory {
 
     @Column(nullable = false)
     private Integer money;
+
+    public void update(Integer money) {
+        if (money != null) {
+            this.money = money;
+        }
+    }
 }

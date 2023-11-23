@@ -1,6 +1,7 @@
 package com.teamJ.budgetManagementApplication.budget.service;
 
 import com.teamJ.budgetManagementApplication.budget.dto.BudgetSetRequestDto;
+import com.teamJ.budgetManagementApplication.budget.dto.BudgetUpdateRequestDto;
 import com.teamJ.budgetManagementApplication.budget.entity.Budget;
 import com.teamJ.budgetManagementApplication.budget.repository.BudgetRepository;
 import com.teamJ.budgetManagementApplication.budgetCategory.service.BudgetCategoryServiceImpl;
@@ -37,6 +38,15 @@ public class BudgetServiceImpl implements BudgetService {
         budgetCategoryService.saveBudgetCategory(targetBudget, budgetSetRequestDto);
     }
 
+    @Override
+    public void updateBudget(Long id, BudgetUpdateRequestDto requestDto, User user) {
+        User targetUser = userService.findUser(user.getAccount());
+        Budget targetBudget = findBudget(id);
+        checkAuthorizedUser(targetBudget, targetUser);
+
+        budgetCategoryService.updateBudget(targetBudget,requestDto);
+    }
+
     private int getTotalBudget(BudgetSetRequestDto budgetSetRequestDto) {
         return budgetSetRequestDto.getFood()
                 + budgetSetRequestDto.getNecessaries()
@@ -56,5 +66,17 @@ public class BudgetServiceImpl implements BudgetService {
         return budgetRepository.findByYearAndMonth(year, month).orElseThrow(
                 () -> new CustomException(CustomErrorCode.BUDGET_NOT_FOUND)
         );
+    }
+
+    private Budget findBudget(Long id) {
+        return budgetRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomErrorCode.BUDGET_NOT_FOUND)
+        );
+    }
+
+    private void checkAuthorizedUser(Budget budget, User user) {
+        if (!budget.getUser().getAccount().equals(user.getAccount())) {
+            throw new CustomException(CustomErrorCode.ACCESS_DENIED);
+        }
     }
 }
