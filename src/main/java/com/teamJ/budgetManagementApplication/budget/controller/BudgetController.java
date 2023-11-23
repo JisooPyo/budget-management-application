@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/budgets")
-@Tag(name = "Budget API", description = "예상 설정 API 정보를 담고 있습니다.")
+@Tag(name = "Budget API", description = "예산에 관한 API 정보를 담고 있습니다.")
 public class BudgetController {
     private final BudgetService budgetService;
 

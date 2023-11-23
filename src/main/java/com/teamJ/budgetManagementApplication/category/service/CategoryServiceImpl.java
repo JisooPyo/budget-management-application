@@ -58,4 +58,10 @@ public class CategoryServiceImpl implements CategoryService {
                 () -> new CustomException(CustomErrorCode.CATEGORY_NOT_FOUND)
         );
     }
+
+    public Category findCategory(Long id) {
+        return categoryRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomErrorCode.CATEGORY_NOT_FOUND)
+        );
+    }
 }

@@ -3,12 +3,18 @@ package com.teamJ.budgetManagementApplication.expense.entity;
 import com.teamJ.budgetManagementApplication.category.entity.Category;
 import com.teamJ.budgetManagementApplication.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
