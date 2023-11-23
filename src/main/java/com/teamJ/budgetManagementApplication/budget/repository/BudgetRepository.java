@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BudgetRepository extends JpaRepository<Budget, Long> {
+public interface BudgetRepository extends JpaRepository<Budget, Long>, BudgetCustomRepository {
     Optional<Budget> findByYearAndMonthAndUser(Integer year, Integer month, User user);
 }
