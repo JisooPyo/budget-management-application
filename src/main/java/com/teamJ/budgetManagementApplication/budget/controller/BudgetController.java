@@ -1,6 +1,7 @@
 package com.teamJ.budgetManagementApplication.budget.controller;
 
 import com.teamJ.budgetManagementApplication.budget.dto.BudgetSetRequestDto;
+import com.teamJ.budgetManagementApplication.budget.dto.BudgetUpdateRequestDto;
 import com.teamJ.budgetManagementApplication.budget.service.BudgetService;
 import com.teamJ.budgetManagementApplication.common.dto.ApiResponseDto;
 import com.teamJ.budgetManagementApplication.common.security.UserDetailsImpl;
@@ -11,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +29,18 @@ public class BudgetController {
         budgetService.createBudget(budgetSetRequestDto, userDetails.getUser());
         return ResponseEntity.ok().body(
                 new ApiResponseDto(HttpStatus.CREATED.value(), "예산 설정 완료")
+        );
+    }
+
+    @Operation(summary = "예산 수정", description = "사용자에게 필요한 정보를 받아 예산을 수정합니다.")
+    @PutMapping("/budgets/{id}")
+    public ResponseEntity<ApiResponseDto> updateBudget(
+            @PathVariable Long id,
+            @Valid @RequestBody BudgetUpdateRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        budgetService.updateBudget(id, requestDto, userDetails.getUser());
+        return ResponseEntity.ok().body(
+                new ApiResponseDto(HttpStatus.OK.value(), "예산 수정 완료")
         );
     }
 }
