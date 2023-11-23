@@ -30,6 +30,8 @@ public class BudgetCategory {
     private Integer money;
 
     public void update(Integer money) {
-        this.money = money;
+        if (money != null) {
+            this.money = money;
+        }
     }
 }
