@@ -27,14 +27,14 @@ public class BudgetServiceImpl implements BudgetService {
 
         int year = budgetSetRequestDto.getYear();
         int month = budgetSetRequestDto.getMonth();
-        checkBudgetExists(year, month);
+        checkBudgetExists(year, month, targetUser);
 
         int totalBudget = getTotalBudget(budgetSetRequestDto);
         Budget budget = Budget.builder().user(targetUser)
                 .year(year).month(month).money(totalBudget).build();
         budgetRepository.save(budget);
 
-        Budget targetBudget = findTargetBudget(year, month);
+        Budget targetBudget = findTargetBudget(year, month, targetUser);
         budgetCategoryService.saveBudgetCategory(targetBudget, budgetSetRequestDto);
     }
 
@@ -44,7 +44,7 @@ public class BudgetServiceImpl implements BudgetService {
         Budget targetBudget = findBudget(id);
         checkAuthorizedUser(targetBudget, targetUser);
 
-        budgetCategoryService.updateBudget(targetBudget,requestDto);
+        budgetCategoryService.updateBudget(targetBudget, requestDto);
     }
 
     private int getTotalBudget(BudgetSetRequestDto budgetSetRequestDto) {
@@ -56,14 +56,14 @@ public class BudgetServiceImpl implements BudgetService {
                 + budgetSetRequestDto.getTransportation();
     }
 
-    private void checkBudgetExists(int year, int month) {
-        if (budgetRepository.findByYearAndMonth(year, month).isPresent()) {
+    private void checkBudgetExists(int year, int month, User targetUser) {
+        if (budgetRepository.findByYearAndMonthAndUser(year, month, targetUser).isPresent()) {
             throw new CustomException(CustomErrorCode.BUDGET_ALREADY_EXISTS);
         }
     }
 
-    private Budget findTargetBudget(int year, int month) {
-        return budgetRepository.findByYearAndMonth(year, month).orElseThrow(
+    private Budget findTargetBudget(int year, int month, User targetUser) {
+        return budgetRepository.findByYearAndMonthAndUser(year, month, targetUser).orElseThrow(
                 () -> new CustomException(CustomErrorCode.BUDGET_NOT_FOUND)
         );
     }
