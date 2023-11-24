@@ -37,7 +37,7 @@ public class ExpenseRepositoryImpl implements ExpenseCustomRepository {
 
         return queryFactory.selectFrom(expense)
                 .where(whereBuilder)
-                .orderBy(expense.id.desc())
+                .orderBy(expense.date.desc())
                 .fetch();
     }
 }
