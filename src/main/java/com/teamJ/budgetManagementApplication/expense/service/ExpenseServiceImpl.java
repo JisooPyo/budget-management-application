@@ -4,10 +4,7 @@ import com.teamJ.budgetManagementApplication.category.entity.Category;
 import com.teamJ.budgetManagementApplication.category.service.CategoryServiceImpl;
 import com.teamJ.budgetManagementApplication.common.exception.CustomErrorCode;
 import com.teamJ.budgetManagementApplication.common.exception.CustomException;
-import com.teamJ.budgetManagementApplication.expense.dto.CategorySumResponseDto;
-import com.teamJ.budgetManagementApplication.expense.dto.ExpenseCreateRequestDto;
-import com.teamJ.budgetManagementApplication.expense.dto.ExpenseListResponseDto;
-import com.teamJ.budgetManagementApplication.expense.dto.ExpenseResponseDto;
+import com.teamJ.budgetManagementApplication.expense.dto.*;
 import com.teamJ.budgetManagementApplication.expense.entity.Expense;
 import com.teamJ.budgetManagementApplication.expense.repository.ExpenseRepository;
 import com.teamJ.budgetManagementApplication.user.entity.User;
@@ -65,6 +62,19 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense = findExpense(id);
         checkExpenseUser(expense, user);
         return expense.toExpenseResponseDto();
+    }
+
+    @Override
+    public void updateExpense(Long id, ExpenseUpdateRequestDto requestDto, User user) {
+        userService.findUser(user.getAccount());
+        Expense expense = findExpense(id);
+        checkExpenseUser(expense, user);
+        // 카테고리 수정 시
+        Category category = null;
+        if (requestDto.getCategoryId() != null) {
+            category = categoryService.findCategory(requestDto.getCategoryId());
+        }
+        expense.update(category, requestDto);
     }
 
     private void checkExpenseUser(Expense expense, User user) {

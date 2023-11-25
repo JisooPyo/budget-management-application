@@ -5,6 +5,7 @@ import com.teamJ.budgetManagementApplication.common.security.UserDetailsImpl;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseCreateRequestDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseListResponseDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseResponseDto;
+import com.teamJ.budgetManagementApplication.expense.dto.ExpenseUpdateRequestDto;
 import com.teamJ.budgetManagementApplication.expense.service.ExpenseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,4 +58,17 @@ public class ExpenseController {
                 expenseService.getExpense(id, userDetails.getUser())
         );
     }
+
+    @Operation(summary = "지출 수정", description = "수정에 필요한 정보를 받아 지출을 수정합니다.")
+    @PutMapping("/expenses/{id}")
+    public ResponseEntity<ApiResponseDto> updateExpense(
+            @PathVariable Long id,
+            @Valid @RequestBody ExpenseUpdateRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        expenseService.updateExpense(id, requestDto, userDetails.getUser());
+        return ResponseEntity.ok().body(
+                new ApiResponseDto(HttpStatus.OK.value(), "지출 수정 완료")
+        );
+    }
+
 }
