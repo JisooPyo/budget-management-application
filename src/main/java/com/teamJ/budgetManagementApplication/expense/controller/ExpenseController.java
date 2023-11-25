@@ -71,4 +71,14 @@ public class ExpenseController {
         );
     }
 
+    @Operation(summary = "지출 삭제", description = "삭제에 필요한 지출 식별자를 받아 지출을 삭제합니다.")
+    @DeleteMapping("/expenses/{id}")
+    public ResponseEntity<ApiResponseDto> deleteExpense(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        expenseService.deleteExpense(id, userDetails.getUser());
+        return ResponseEntity.ok().body(
+                new ApiResponseDto(HttpStatus.OK.value(), "지출 삭제 완료")
+        );
+    }
 }
