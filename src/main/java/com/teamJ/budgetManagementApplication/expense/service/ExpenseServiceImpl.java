@@ -73,7 +73,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     private List<CategorySumResponseDto> getCategorySum(Long categoryId, List<Expense> expenseList) {
-        if (categoryId == null) {
+        if (categoryId != null) {
             return null;
         }
         // 카테고리, 합계
