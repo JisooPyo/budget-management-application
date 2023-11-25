@@ -45,4 +45,12 @@ public interface ExpenseService {
      * @param user       인증된 유저 정보
      */
     void updateExpense(Long id, ExpenseUpdateRequestDto requestDto, User user);
+
+    /**
+     * 지출 삭제
+     *
+     * @param id   지출 식별자
+     * @param user 인증된 유저 정보
+     */
+    void deleteExpense(Long id, User user);
 }

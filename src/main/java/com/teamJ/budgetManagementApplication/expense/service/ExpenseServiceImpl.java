@@ -77,6 +77,15 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.update(category, requestDto);
     }
 
+    @Override
+    public void deleteExpense(Long id, User user) {
+        userService.findUser(user.getAccount());
+        Expense expense = findExpense(id);
+        checkExpenseUser(expense, user);
+
+        expenseRepository.deleteById(id);
+    }
+
     private void checkExpenseUser(Expense expense, User user) {
         if (!expense.getUser().getId().equals(user.getId())) {
             throw new CustomException(CustomErrorCode.NOT_AUTHORIZED);
