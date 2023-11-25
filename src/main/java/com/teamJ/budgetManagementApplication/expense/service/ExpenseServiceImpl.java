@@ -59,6 +59,26 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .expenseList(expenseDtoList).build();
     }
 
+    @Override
+    public ExpenseResponseDto getExpense(Long id, User user) {
+        userService.findUser(user.getAccount());
+        Expense expense = findExpense(id);
+        checkExpenseUser(expense, user);
+        return expense.toExpenseResponseDto();
+    }
+
+    private void checkExpenseUser(Expense expense, User user) {
+        if (!expense.getUser().getId().equals(user.getId())) {
+            throw new CustomException(CustomErrorCode.NOT_AUTHORIZED);
+        }
+    }
+
+    private Expense findExpense(Long id) {
+        return expenseRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomErrorCode.EXPENSE_NOT_FOUND)
+        );
+    }
+
     private void validateParameter(
             String start, String end, Integer min, Integer max, Long categoryId, User user) {
         userService.findUser(user.getAccount());

@@ -4,6 +4,7 @@ import com.teamJ.budgetManagementApplication.common.dto.ApiResponseDto;
 import com.teamJ.budgetManagementApplication.common.security.UserDetailsImpl;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseCreateRequestDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseListResponseDto;
+import com.teamJ.budgetManagementApplication.expense.dto.ExpenseResponseDto;
 import com.teamJ.budgetManagementApplication.expense.service.ExpenseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,6 +45,16 @@ public class ExpenseController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.ok().body(
                 expenseService.getAllExpenses(start, end, categoryId, min, max, userDetails.getUser())
+        );
+    }
+
+    @Operation(summary = "지출 상세 읽기", description = "한 지출에 대해서 조회합니다.")
+    @GetMapping("/expenses/{id}")
+    public ResponseEntity<ExpenseResponseDto> getExpense(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok().body(
+                expenseService.getExpense(id, userDetails.getUser())
         );
     }
 }
