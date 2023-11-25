@@ -2,6 +2,7 @@ package com.teamJ.budgetManagementApplication.expense.service;
 
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseCreateRequestDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseListResponseDto;
+import com.teamJ.budgetManagementApplication.expense.dto.ExpenseResponseDto;
 import com.teamJ.budgetManagementApplication.user.entity.User;
 
 public interface ExpenseService {
@@ -25,4 +26,13 @@ public interface ExpenseService {
      * @return 지출 목록(전체 지출 합, 카테고리별 지출 합, 지출 목록 조회)
      */
     ExpenseListResponseDto getAllExpenses(String start, String end, Long categoryId, Integer min, Integer max, User user);
+
+    /**
+     * 지출 상세 조회
+     *
+     * @param id   지출 식별자
+     * @param user 인증된 유저 정보
+     * @return 조회된 지출의 정보
+     */
+    ExpenseResponseDto getExpense(Long id, User user);
 }
