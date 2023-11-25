@@ -3,6 +3,7 @@ package com.teamJ.budgetManagementApplication.expense.service;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseCreateRequestDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseListResponseDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseResponseDto;
+import com.teamJ.budgetManagementApplication.expense.dto.ExpenseUpdateRequestDto;
 import com.teamJ.budgetManagementApplication.user.entity.User;
 
 public interface ExpenseService {
@@ -35,4 +36,13 @@ public interface ExpenseService {
      * @return 조회된 지출의 정보
      */
     ExpenseResponseDto getExpense(Long id, User user);
+
+    /**
+     * 지출 수정
+     *
+     * @param id         지출 식별자
+     * @param requestDto 지출 수정에 필요한 정보
+     * @param user       인증된 유저 정보
+     */
+    void updateExpense(Long id, ExpenseUpdateRequestDto requestDto, User user);
 }

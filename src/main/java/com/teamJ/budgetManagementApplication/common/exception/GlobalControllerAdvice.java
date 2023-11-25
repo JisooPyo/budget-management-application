@@ -4,6 +4,7 @@ import com.teamJ.budgetManagementApplication.common.dto.ApiResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -55,5 +56,15 @@ public class GlobalControllerAdvice {
         return ResponseEntity.badRequest().body(
                 new ApiResponseDto(HttpStatus.BAD_REQUEST.value(),
                         e.getName() + "가 알맞은 값이 아닙니다."));
+    }
+
+    // RequestBody를 제대로 읽지 못했을 때
+    // ex. RequestBody에 LocalDate 변수가 있는데 이를 타입에 맞게끔 보내주지 않았을 때("date":2023)
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<ApiResponseDto> handlerMessageNotReadableException(
+            HttpMessageNotReadableException e) {
+        return ResponseEntity.badRequest().body(
+                new ApiResponseDto(HttpStatus.BAD_REQUEST.value(),
+                        "요청정보가 잘못되었습니다."));
     }
 }

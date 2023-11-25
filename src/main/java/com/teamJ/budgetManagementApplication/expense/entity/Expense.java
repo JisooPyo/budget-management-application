@@ -1,13 +1,16 @@
 package com.teamJ.budgetManagementApplication.expense.entity;
 
 import com.teamJ.budgetManagementApplication.category.entity.Category;
+import com.teamJ.budgetManagementApplication.expense.dto.ExpenseCreateRequestDto;
 import com.teamJ.budgetManagementApplication.expense.dto.ExpenseResponseDto;
+import com.teamJ.budgetManagementApplication.expense.dto.ExpenseUpdateRequestDto;
 import com.teamJ.budgetManagementApplication.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 
@@ -16,6 +19,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,5 +53,23 @@ public class Expense {
                 .money(money)
                 .memo(memo)
                 .build();
+    }
+
+    public void update(Category category, ExpenseUpdateRequestDto requestDto) {
+        if(category!=null){
+            this.category = category;
+        }
+        if(requestDto.getDate()!=null){
+            this.date = requestDto.getDate();
+        }
+        if(requestDto.getMoney()!=null){
+            this.money = requestDto.getMoney();
+        }
+        if(requestDto.getMemo()!=null){
+            this.memo = requestDto.getMemo();
+        }
+        if(requestDto.getExcludeFromSum()!=null){
+            this.excludeFromSum = requestDto.getExcludeFromSum();
+        }
     }
 }
