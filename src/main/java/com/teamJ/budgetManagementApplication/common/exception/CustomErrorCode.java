@@ -20,7 +20,8 @@ public enum CustomErrorCode {
     INVALID_DATE_FORMAT(HttpStatus.BAD_REQUEST.value(), "알맞은 날짜 형식이 아닙니다."),
     MIN_MUST_BE_NOT_NEGATIVE(HttpStatus.BAD_REQUEST.value(), "최솟값은 0이상의 양수여야 합니다."),
     MIN_EXCEEDS_MAX(HttpStatus.BAD_REQUEST.value(), "최솟값은 최댓값보다 작아야 합니다."),
-    EXPENSE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "존재하지 않는 지출입니다.");
+    EXPENSE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "존재하지 않는 지출입니다."),
+    NOT_AUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "권한이 없습니다.");
 
     private final int errorCode;
     private final String errorMessage;

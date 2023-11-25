@@ -63,7 +63,14 @@ public class ExpenseServiceImpl implements ExpenseService {
     public ExpenseResponseDto getExpense(Long id, User user) {
         userService.findUser(user.getAccount());
         Expense expense = findExpense(id);
+        checkExpenseUser(expense, user);
         return expense.toExpenseResponseDto();
+    }
+
+    private void checkExpenseUser(Expense expense, User user) {
+        if (!expense.getUser().getId().equals(user.getId())) {
+            throw new CustomException(CustomErrorCode.NOT_AUTHORIZED);
+        }
     }
 
     private Expense findExpense(Long id) {
