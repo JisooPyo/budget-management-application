@@ -48,7 +48,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             String start, String end, Long categoryId, Integer min, Integer max, User user) {
         userService.findUser(user.getAccount());
         validateDate(start, end);
-
+        validateMinAndMax(min, max);
         List<Expense> expenseList = getExpenseList(start, end, categoryId, min, max, user);
         List<ExpenseResponseDto> expenseDtoList =
                 expenseList.stream().map(Expense::toExpenseResponseDto).toList();
@@ -59,6 +59,12 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .sum(totalSum)
                 .categorySumList(categorySums)
                 .expenseList(expenseDtoList).build();
+    }
+
+    private void validateMinAndMax(Integer min, Integer max) {
+        if (min < 0) {
+            throw new CustomException(CustomErrorCode.MIN_MUST_BE_NOT_NEGATIVE);
+        }
     }
 
     private long getTotalSum(List<Expense> expenseList) {
