@@ -38,7 +38,7 @@ public class ExpenseController {
     public ResponseEntity<ExpenseListResponseDto> getAllExpenses(
             @RequestParam(name = "start") String start,
             @RequestParam(name = "end") String end,
-            @RequestParam(name = "category", required = false) Long categoryId,
+            @RequestParam(name = "categoryId", required = false) Long categoryId,
             @RequestParam(name = "min", required = false) Integer min,
             @RequestParam(name = "max", required = false) Integer max,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
