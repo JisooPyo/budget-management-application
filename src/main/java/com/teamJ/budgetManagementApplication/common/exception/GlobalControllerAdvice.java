@@ -53,6 +53,7 @@ public class GlobalControllerAdvice {
     public ResponseEntity<ApiResponseDto> handlerTypeMismatchException(
             MethodArgumentTypeMismatchException e) {
         return ResponseEntity.badRequest().body(
-                new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+                new ApiResponseDto(HttpStatus.BAD_REQUEST.value(),
+                        e.getName() + "가 알맞은 값이 아닙니다."));
     }
 }
