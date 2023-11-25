@@ -46,9 +46,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public ExpenseListResponseDto getAllExpenses(
             String start, String end, Long categoryId, Integer min, Integer max, User user) {
-        userService.findUser(user.getAccount());
-        validateDate(start, end);
-        validateMin(min);
+        validateParameter(start, end, min, categoryId, user);
         List<Expense> expenseList = getExpenseList(start, end, categoryId, min, max, user);
         List<ExpenseResponseDto> expenseDtoList =
                 expenseList.stream().map(Expense::toExpenseResponseDto).toList();
@@ -59,6 +57,17 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .sum(totalSum)
                 .categorySumList(categorySums)
                 .expenseList(expenseDtoList).build();
+    }
+
+    private void validateParameter(String start, String end, Integer min, Long categoryId, User user) {
+        userService.findUser(user.getAccount());
+        validateDate(start, end);
+        validateMin(min);
+        validateCategoryId(categoryId);
+    }
+
+    private void validateCategoryId(Long categoryId) {
+        categoryService.findCategory(categoryId);
     }
 
     private void validateMin(Integer min) {
